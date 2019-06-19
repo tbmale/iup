@@ -3,7 +3,7 @@ package iupgl
 import (
 	"unsafe"
 
-	"github.com/matwachich/iup"
+	"github.com/tbmale/iup"
 )
 
 /*

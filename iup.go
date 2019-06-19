@@ -519,6 +519,11 @@ func SetAttribute(ih Ihandle, name string, value interface{}) { //NOTE string at
 	}
 }
 
+// void      IupCopyAttributes(Ihandle* src_ih, Ihandle* dst_ih);
+func CopyAttributes(src Ihandle, dst Ihandle){
+	C.IupCopyAttributes(src.ptr(), dst.ptr())
+}
+
 //SetRGB sets an interface element attribute.
 func SetRGB(ih Ihandle, name string, r, g, b uint8) {
 	c_name := C.CString(name)
@@ -979,6 +984,34 @@ func GetAttributeHandle(ih Ihandle, name string) Ihandle {
 	return mkih(C.IupGetAttributeHandle(ih.ptr(), c_name))
 }
 
+// void      IupSetAttributeHandleId(Ihandle* ih, const char* name, int id, Ihandle* ih_named);
+func SetAttributeHandleId(ih Ihandle, name string, id int, ih_named Ihandle){
+	c_name := C.CString(name)
+	defer C.free(unsafe.Pointer(c_name))
+	C.IupSetAttributeHandleId(ih.ptr(), c_name, C.int(id), ih_named.ptr())
+}
+
+// Ihandle*  IupGetAttributeHandleId(Ihandle* ih, const char* name, int id);
+func GetAttributeHandleId(ih Ihandle, name string, id int) Ihandle{
+	c_name := C.CString(name)
+	defer C.free(unsafe.Pointer(c_name))
+	return mkih(C.IupGetAttributeHandleId(ih.ptr(), c_name, C.int(id)))
+}
+
+// void      IupSetAttributeHandleId2(Ihandle* ih, const char* name, int lin, int col, Ihandle* ih_named);
+func SetAttributeHandleId2(ih Ihandle, name string, lin, col int , ih_named Ihandle){
+	c_name := C.CString(name)
+	defer C.free(unsafe.Pointer(c_name))
+	C.IupSetAttributeHandleId2(ih.ptr(), c_name, C.int(lin), C.int(col), ih_named.ptr())
+}
+
+// Ihandle*  IupGetAttributeHandleId2(Ihandle* ih, const char* name, int lin, int col);
+func GetAttributeHandleId2() Ihandle{
+	c_name := C.CString(name)
+	defer C.free(unsafe.Pointer(c_name))
+	return mkih(C.IupGetAttributeHandleId(ih.ptr(), c_name, C.int(lin), C.int(col)))
+}
+
 //GetClassName returns the name of the class of an interface element.
 func GetClassName(ih Ihandle) string {
 	//char* IupGetClassName(Ihandle* ih);
@@ -1106,6 +1139,11 @@ func Fill() Ihandle {
 	return mkih(C.IupFill())
 }
 
+// Ihandle*  IupSpace(void);
+func Space() Ihandle{
+	return mkih(C.IupSpace())
+}
+
 //Radio creates a void container for grouping mutual exclusive toggles.
 //Only one of its descendent toggles will be active at a time.
 //The toggles can be at any composition.
@@ -1153,6 +1191,13 @@ func Hbox(children ...Ihandle) Ihandle {
 	//Ihandle* IupHbox (Ihandle* child,...);
 	//Ihandle* IupHboxv (Ihandle* *children);
 	return mkih(C.IupHboxv((**C.Ihandle)(unsafe.Pointer(&(children[0])))))
+}
+
+// Ihandle*  IupMultiBox   (Ihandle* child, ...);
+// Ihandle*  IupMultiBoxv  (Ihandle **children);
+func MultiBox(children ...Ihandle) Ihandle {
+	children = append(children, Ihandle(0))
+	return mkih(C.IupMultiBoxv((**C.Ihandle)(unsafe.Pointer(&(children[0])))))
 }
 
 //Normalizer creates a void container that does not affect the dialog layout.
@@ -1372,6 +1417,13 @@ func Label(title ...string) Ihandle {
 	return mkih(C.IupLabel(c_title))
 }
 
+// Ihandle*  IupFlatLabel  (const char* title);
+func FlatLabel(title ...string) Ihandle {
+	c_title := optionalString(title)
+	defer cStrFree(c_title)
+	return mkih(C.IupFlatLabel(c_title))
+}
+
 //List Creates an interface element that displays a list of items.
 //The list can be visible or can be dropped down. It also can have an edit box for text input. So it is a 4 in 1 element.
 //In native systems the dropped down case is called Combo Box.
@@ -1381,6 +1433,16 @@ func List(action ...string) Ihandle {
 
 	//Ihandle* IupList (const char* action);
 	return mkih(C.IupList(c_action))
+}
+
+// Ihandle*  IupFlatList   (void);
+func FlatList() Ihandle {
+	return mkih(C.IupFlatList())
+}
+
+// Ihandle*  IupDropButton (Ihandle* dropchild);
+func DropButton(dropchild Ihandle) Ihandle{
+	return mkih(C.IupDropButton(dropchild.ptr()))
 }
 
 //Text creates an editable text field.
@@ -1414,6 +1476,13 @@ func Toggle(title string, action ...string) Ihandle {
 
 	//Ihandle* IupToggle (const char* title, const char* action);
 	return mkih(C.IupToggle(c_title, c_action))
+}
+
+// Ihandle*  IupFlatToggle (const char* title);
+func FlatToggle(title string) Ihandle {
+	c_title := C.CString(title)
+	defer C.free(unsafe.Pointer(c_title))
+	return mkih(C.IupFlatToggle(c_title))
 }
 
 //Timer creates a timer which periodically invokes a callback when the time is up.
@@ -1461,6 +1530,14 @@ func Tabs(children ...Ihandle) Ihandle {
 	//Ihandle* IupTabsv (Ihandle* *children);
 	return mkih(C.IupTabsv((**C.Ihandle)(unsafe.Pointer(&(children[0])))))
 }
+
+// Ihandle*  IupFlatTabs   (Ihandle* first, ...);
+// Ihandle*  IupFlatTabsv  (Ihandle* *children);
+func FlatTabs(children ...Ihandle) Ihandle {
+	children = append(children, Ihandle(0))
+	return mkih(C.IupFlatTabsv((**C.Ihandle)(unsafe.Pointer(&(children[0])))))
+}
+
 
 //Tree creates a tree containing nodes of branches or leaves. Both branches and leaves can have an associated text and image.
 //
@@ -1525,6 +1602,29 @@ func DatePick() Ihandle {
 func Calendar() Ihandle {
 	//Ihandle* IupCalendar (void);
 	return mkih(C.IupCalendar())
+}
+
+//Gauge creates a Gauge control. Shows a percent value that can be updated to simulate a progression. It inherits from IupCanvas.
+//
+//This is an additional control that depends on the CD library. It is (NO MORE - 3.24) included in the IupControls library.
+//
+//It is recommended that new applications use the IupProgressBar control of the main library.
+func Gauge() iup.Ihandle {
+	//Ihandle *IupGauge(void);
+	return iup.Ihandle(unsafe.Pointer(C.IupGauge()))
+}
+
+//Dial creates a dial for regulating a given angular variable.
+//
+//This is an additional control that depends (NO MORE - 3.24) on the CD library. It is (NO MORE - 3.24) included in the IupControls library.
+//
+//It inherits from IupCanvas.
+func Dial(_type string) iup.Ihandle {
+	c_type := C.CString(_type)
+	defer C.free(unsafe.Pointer(c_type))
+
+	//Ihandle *IupDial(const char* type);
+	return iup.Ihandle(unsafe.Pointer(C.IupDial(c_type)))
 }
 
 /* Old controls, use SPIN attribute of IupText */
@@ -1672,12 +1772,31 @@ func MessageDlg() Ihandle {
 //ColorDlg creates the Color Dialog element. It is a predefined dialog for selecting a color.
 //
 //There are 3 versions of the dialog. One for Windows only, one for GTK only and one for all systems,
-//but it is based on the IupColorBrowser control that depends on the CD library.
+//but it is based on the IupColorBrowser control that (NO MORE 3.24) depends on the CD library.
 //
 //The Windows and GTK dialogs can be shown only with the IupPopup function.
 //The IupColorBrowser based dialog is a IupDialog that can be shown as any regular IupDialog.
 //
-//IMPORTANT: The IupColorBrowser based dialog is included in the Controls Library.
+//IMPORTANT: The IupColorBrowser based dialog is (NO MORE - 3.24) included in the Controls Library.
+func ColorBrowser() iup.Ihandle {
+	//Ihandle *IupColorBrowser(void);
+	return iup.Ihandle(unsafe.Pointer(C.IupColorBrowser()))
+}
+
+//Colorbar creates a color palette to enable a color selection from several samples.
+//It can select one or two colors. The primary color is selected with the left mouse button,
+//and the secondary color is selected with the right mouse button.
+//You can double click a cell to change its color and you can double click the preview
+//area to switch between primary and secondary colors.
+//
+//This is an additional control that (NO MORE - 3.24) depends on the CD library. It is (NO MORE - 3.24) included in the IupControls library.
+//
+//It inherits from IupCanvas.
+func Colorbar() iup.Ihandle {
+	//Ihandle* IupColorbar(void);
+	return iup.Ihandle(unsafe.Pointer(C.IupColorbar()))
+}
+
 //When the Controls Library is initialized the Windows and GTK dialogs are not available anymore,
 //i.e. before the Controls Library initialization only the Windows and GTK dialogs are available,
 //after only the IupColorBrowser based dialog is available.
@@ -1738,6 +1857,22 @@ func Alarm(title, msg, b1, b2, b3 string) int {
 
 	//int IupAlarm(const char *title, const char *msg, const char *b1, const char *b2, const char *b3);
 	return int(C.IupAlarm(c_title, c_msg, c_b1, c_b2, c_b3))
+}
+
+// void IupMessageError(Ihandle* parent, const char* message);
+func MessageError(parent Ihandle, message string){
+	c_message := C.CString(message)
+	defer C.free(unsafe.Pointer(c_message))
+	C.IupMessageError(parent.ptr(), c_message)
+}
+
+// int IupMessageAlarm(Ihandle* parent, const char* title, const char *message, const char *buttons);
+func MessageAlarm(parent Ihandle, title string, message string, buttons string) int{
+	c_title, c_message, c_buttons := cStrOrNull(title), C.CString(message), C.CString(buttons)
+	defer cStrFree(c_title)
+	defer C.free(unsafe.Pointer(c_message))
+	defer C.free(unsafe.Pointer(c_buttons))
+	return int(C.IupMessageAlarm(parent.ptr(), c_title, c_message, c_buttons))
 }
 
 //int IupScanf(const char *format, ...);
@@ -1939,9 +2074,9 @@ func Param(format string) Ihandle {
 }
 
 //ParamBox creates the IupGetParam dialog contents with the array of parameters. This includes the button box at the bottom.
-func ParamBox(parent Ihandle, params []Ihandle) Ihandle {
+func ParamBox(params []Ihandle) Ihandle {
 	//Ihandle* IupParamBox(Ihandle* parent, Ihandle** params, int count);
-	return mkih(C.IupParamBox(parent.ptr(), (**C.struct_Ihandle_)(unsafe.Pointer(&params[0])), C.int(len(params))))
+	return mkih(C.IupParamBox((**C.struct_Ihandle_)(unsafe.Pointer(&params[0]))))
 }
 
 //LayoutDialog creates a Layout Dialog. It is a predefined dialog to visually edit the layout of another dialog in run time.
@@ -1957,6 +2092,11 @@ func ParamBox(parent Ihandle, params []Ihandle) Ihandle {
 func LayoutDialog(dialog Ihandle) Ihandle {
 	//Ihandle* IupLayoutDialog(Ihandle* dialog);
 	return mkih(C.IupLayoutDialog(dialog.ptr()))
+}
+
+// Ihandle* IupGlobalsDialog(void);
+func GlobalsDialog() Ihandle {
+	return mkih(C.IupGlobalsDialog())
 }
 
 //ElementPropertiesDialog creates an Element Properties Dialog.
@@ -1976,6 +2116,12 @@ func ElementPropertiesDialog(elem Ihandle) Ihandle {
 	//Ihandle* IupElementPropertiesDialog(Ihandle* elem);
 	return mkih(C.IupElementPropertiesDialog(elem.ptr()))
 }
+
+// void      IupLog(const char* type, const char* format, ...);
+// go ...interface{} to c varargs not yet available (if ever)
+// func Log(logtype string, format string, ...interface{}){
+	// C.IupLog()
+// }
 
 /* ---------------------------------------------------------------------------------------------- */
 

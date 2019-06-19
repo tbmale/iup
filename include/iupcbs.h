@@ -34,6 +34,7 @@ typedef int (*IFnsViii)(Ihandle*, char*, void*, int, int, int);  /* dropdata_cb 
 typedef int (*IFnsiii)(Ihandle*, char*, int, int, int);  /* dropfiles_cb */
 
 typedef int (*IFnnii)(Ihandle*, Ihandle*, int, int); /* drop_cb */
+typedef int (*IFnn)(Ihandle*, Ihandle*); /* savemarkers_cb, restoremarkers_cb */
 typedef int (*IFnnn)(Ihandle*, Ihandle*, Ihandle*); /* tabchange_cb */
 typedef int (*IFnss)(Ihandle*, char *, char *);  /* file_cb */
 typedef int (*IFns)(Ihandle*, char *);  /* multiselect_cb */
@@ -57,6 +58,7 @@ typedef int (*IFniiff)(Ihandle*, int, int, float, float); /* delete_cb (pplot) *
 typedef int (*IFniiffi)(Ihandle*, int, int, float, float, int); /* select_cb (pplot) */
 typedef int (*IFniidd)(Ihandle*, int, int, double, double); /* delete_cb */
 typedef int (*IFniiddi)(Ihandle*, int, int, double, double, int); /* select_cb */
+typedef int (*IFniiddiddi)(Ihandle*, int, int, double, double, int, double, double, int); /* clicksegment_cb */
 typedef int (*IFniiffFF)(Ihandle*, int, int, float, float, float*, float*); /* edit_cb */
 typedef int (*IFniiffs)(Ihandle*, int, int, float, float, char*);  /* plotbutton_cb (pplot) */
 typedef int (*IFniidds)(Ihandle*, int, int, double, double, char*);  /* plotbutton_cb */

@@ -14,7 +14,7 @@ package iupmatrixex
 import (
 	"unsafe"
 
-	"github.com/matwachich/iup"
+	"github.com/tbmale/iup"
 )
 
 /*
@@ -32,10 +32,10 @@ import (
 import "C"
 
 //Open
-func Open() {
-	//void IupMatrixExOpen(void);
-	C.IupMatrixExOpen()
-}
+// func Open() {
+	void IupMatrixExOpen(void);
+	// C.IupMatrixExOpen()
+// }
 
 //MatrixEx returns the identifier of the created editing component, or NULL if an error occurs.
 func MatrixEx() iup.Ihandle {
@@ -44,10 +44,10 @@ func MatrixEx() iup.Ihandle {
 }
 
 //MatrixExInit register the new attributes and callbacks in a regular IupMatrix control.
-func MatrixExInit(ih iup.Ihandle) {
-	//void IupMatrixExInit(Ihandle* ih);
-	C.IupMatrixExInit(pih(ih))
-}
+// func MatrixExInit(ih iup.Ihandle) {
+	void IupMatrixExInit(Ihandle* ih);
+	// C.IupMatrixExInit(pih(ih))
+// }
 
 /* -------------------------------------------------------------------------- */
 

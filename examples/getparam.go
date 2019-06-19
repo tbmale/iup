@@ -4,7 +4,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/matwachich/iup"
+	"github.com/tbmale/iup"
 )
 
 func main() {

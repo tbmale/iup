@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/matwachich/iup"
-	"github.com/matwachich/iup/iupcontrols"
+	"github.com/tbmale/iup"
+	"github.com/tbmale/iup/iupcontrols"
 )
 
 var text_red, text_green, text_blue iup.Ihandle

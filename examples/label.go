@@ -2,7 +2,7 @@
 package main
 
 import (
-	"github.com/matwachich/iup"
+	"github.com/tbmale/iup"
 )
 
 var pixmap = []byte{

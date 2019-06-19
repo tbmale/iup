@@ -2,7 +2,7 @@
 package main
 
 import (
-	"github.com/matwachich/iup"
+	"github.com/tbmale/iup"
 )
 
 func ml_action(self iup.Ihandle, c int, after uintptr) int {

@@ -3,7 +3,7 @@ package iupcontrols
 import (
 	"unsafe"
 
-	"github.com/matwachich/iup"
+	"github.com/tbmale/iup"
 )
 
 /*
@@ -31,13 +31,13 @@ func Open() int {
 //You can double click a cell to change its color and you can double click the preview
 //area to switch between primary and secondary colors.
 //
-//This is an additional control that depends on the CD library. It is included in the IupControls library.
+//This is an additional control that (NO MORE - 3.24) depends on the CD library. It is (NO MORE - 3.24) included in the IupControls library.
 //
 //It inherits from IupCanvas.
-func Colorbar() iup.Ihandle {
-	//Ihandle* IupColorbar(void);
-	return iup.Ihandle(unsafe.Pointer(C.IupColorbar()))
-}
+// func Colorbar() iup.Ihandle {
+//	Ihandle* IupColorbar(void);
+// return iup.Ihandle(unsafe.Pointer(C.IupColorbar()))
+// }
 
 //Cells creates a grid widget (set of cells) that enables several application-specific drawing,
 //such as: chess tables, tiles editors, degrade scales, drawable spreadsheets and so forth.
@@ -72,33 +72,33 @@ func Cells() iup.Ihandle {
 //This is an additional control that depends on the CD library. It is included in the IupControls library.
 //
 //For a dialog that simply returns the selected color, you can use function IupGetColor or IupColorDlg.
-func ColorBrowser() iup.Ihandle {
-	//Ihandle *IupColorBrowser(void);
-	return iup.Ihandle(unsafe.Pointer(C.IupColorBrowser()))
-}
+// func ColorBrowser() iup.Ihandle {
+//	Ihandle *IupColorBrowser(void);
+// return iup.Ihandle(unsafe.Pointer(C.IupColorBrowser()))
+// }
 
 //Gauge creates a Gauge control. Shows a percent value that can be updated to simulate a progression. It inherits from IupCanvas.
 //
-//This is an additional control that depends on the CD library. It is included in the IupControls library.
+//This is an additional control that depends on the CD library. It is (NO MORE - 3.24) included in the IupControls library.
 //
 //It is recommended that new applications use the IupProgressBar control of the main library.
-func Gauge() iup.Ihandle {
-	//Ihandle *IupGauge(void);
-	return iup.Ihandle(unsafe.Pointer(C.IupGauge()))
-}
+// func Gauge() iup.Ihandle {
+//	Ihandle *IupGauge(void);
+// return iup.Ihandle(unsafe.Pointer(C.IupGauge()))
+// }
 
 //Dial creates a dial for regulating a given angular variable.
 //
-//This is an additional control that depends on the CD library. It is included in the IupControls library.
+//This is an additional control that depends (NO MORE - 3.24) on the CD library. It is (NO MORE - 3.24) included in the IupControls library.
 //
 //It inherits from IupCanvas.
-func Dial(_type string) iup.Ihandle {
-	c_type := C.CString(_type)
-	defer C.free(unsafe.Pointer(c_type))
+// func Dial(_type string) iup.Ihandle {
+// c_type := C.CString(_type)
+// defer C.free(unsafe.Pointer(c_type))
 
-	//Ihandle *IupDial(const char* type);
-	return iup.Ihandle(unsafe.Pointer(C.IupDial(c_type)))
-}
+//	Ihandle *IupDial(const char* type);
+// return iup.Ihandle(unsafe.Pointer(C.IupDial(c_type)))
+// }
 
 //Matrix creates a matrix of alphanumeric fields. Therefore, all values of the matrix fields are strings.
 //The matrix is not a grid container like many systems have. It inherits from IupCanvas.
