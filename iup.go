@@ -1934,8 +1934,8 @@ func Param(format string) Ihandle {
 	c_format := C.CString(format)
 	defer C.free(unsafe.Pointer(c_format))
 
-	//Ihandle* IupParamf(const char* format);
-	return mkih(C.IupParamf(c_format))
+	//Ihandle* IupParam(const char* format);
+	return mkih(C.IupParam(c_format))
 }
 
 //ParamBox creates the IupGetParam dialog contents with the array of parameters. This includes the button box at the bottom.
