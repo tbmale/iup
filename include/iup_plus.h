@@ -186,7 +186,7 @@ namespace iup
   inline Handle GetHandle(const char *name) { return Handle(IupGetHandle(name)); }
   inline Handle SetHandle(const char *name, const Handle& handle) { return Handle(IupSetHandle(name, handle.GetHandle())); }
   inline void SetLanguagePack(const Handle& handle) { IupSetLanguagePack(handle.GetHandle()); }
-  inline Handle Paramf(const char* format) { return Handle(IupParamf(format)); }
+  inline Handle Param(const char* format) { return Handle(IupParam(format)); }
   inline Handle ParamBox(const Handle& parent, const Handle* params_handle, int count) {
     Ihandle** params = new Ihandle* [count];
     for (int i = 0; i < count; i++)
